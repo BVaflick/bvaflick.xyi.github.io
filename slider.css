@@ -11,7 +11,12 @@
 }
 
 body { margin: 0; } 
-div#slider { overflow: hidden; max-height: 980px; width: 100%; }
+div#slider { 
+  overflow: hidden; 
+  max-height: 400px; 
+  width: 70%;
+  margin-left: 15%;
+}
 div#slider figure img { width: 20%; float: left;  }
 div#slider figure { 
   position: relative;
