@@ -96,13 +96,13 @@ header{
     background-color: white;
 }
 .tumblr{
-	background: url("socialNetworksSprite.png") no-repeat 1px;
+	background: url("../img/socialNetworksSprite.png") no-repeat 1px;
 }
 .instagram{
-	background: url("socialNetworksSprite.png") no-repeat -59px;
+	background: url("../img/socialNetworksSprite.png") no-repeat -59px;
 }
 .vk{
-	background: url("socialNetworksSprite.png") no-repeat -29.9px;
+	background: url("../img/socialNetworksSprite.png") no-repeat -29.9px;
 }
 
 .promo{	

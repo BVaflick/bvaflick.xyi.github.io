@@ -19,53 +19,14 @@
 		<meta name="description" content="Сайт-портфолио, величайшей бабёнки-фотографа Севастополя и вообще всего мира, Кати Кхаванчика aka Kate Hevan(звучит, как псевдоним порноактрисы)">
 		<meta name="keywords" content="KateHevan, Kate Hevan, Kate Khavanova, Photographer Site, Sebastopol, Sevastopol, Севастополь, Фотограф, Сайт фотографа, Хаванова, Кхаванчик, Photography">
 		<meta name='yandex-verification' content='6060077c8d5dc411' />
-	  <link rel="stylesheet" type="text/css" media="screen" href="style.css"/>		
-		<link rel="stylesheet" type="text/css" media="screen" href="slider.css"/>		
-		<link rel="stylesheet" type="text/css" media="screen" href="jquery-gp-gallery.css"/>
-		<link rel="stylesheet" type="text/css" media="screen" href="touchTouch.css"/>
+	    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css"/>		
+		<link rel="stylesheet" type="text/css" media="screen" href="css/slider.css"/>		
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-gp-gallery.css"/>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/touchTouch.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="jquery-gp-gallery.js"></script>
-		<script src="touchTouch.jquery.js"></script>
-		<script type="text/javascript"> 
-			$.ajax({  
-				url: 'https://api.vk.com/method/photos.get?owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=4.1',    
-				dataType: "jsonp",  
-				success:function(e){ 
-					var $div = $(".pictures");					
-					var $height = 200;		
-					var $width;
-					$.each(e.response, function(i, val) {						
-						$width = 200 / (val.height / val.width);
-						console.log("height: " + val.height + "width: " + val.width + "imgwidth: " + $width);
-						var img = $('<img width='+$width+' height='+$height+'>'); 
-						img.attr('src', val.src_big);
-						var fullsizePictureLink = !val.src_xxbig ? val.src_xbig : val.src_xxbig;
-						var a = $('<a class=a href=' + fullsizePictureLink + '>');
-						a.html(img);
-						$('.clear').before(a);
-					});
-					$('.pictures').gpGallery('img');
-					$('#thumbs a').touchTouch();	
-					/*$(window).resize(function(){
-						$('.pictures').empty();
-						$('.pictures').append($('<div class="separator">'));
-						$('.pictures').append($('<div class="clear">'));
-						$.each(e.response, function(i, val) {						
-							$width = 200 / (val.height / val.width);
-							console.log("height: " + val.height + "width: " + val.width + "imgwidth: " + $width);
-							var img = $('<img width='+$width+' height='+$height+'>'); 
-							img.attr('src', val.src_big);
-							var fullsizePictureLink = !val.src_xxbig ? val.src_xbig : val.src_xxbig;
-							var a = $('<a class=a href=' + fullsizePictureLink + '>');
-							a.html(img);
-							$('.clear').before(a);
-							//$('.pictures').gpGallery('img');
-						});
-					});	*/				
-					//$(window).resize(function(){location.reload();});
-				}  
-			}); 
-		</script>	
+		<script src="scripts/jquery-gp-gallery.js"></script>
+		<script src="scripts/touchTouch.jquery.js"></script>
+		<script src="scripts/script.js"></script>	
     </head>
 <body>
 	<header>
