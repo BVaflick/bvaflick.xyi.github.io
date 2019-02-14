@@ -43,7 +43,7 @@ header{
 	top: 0;
 	left: 0;
 	z-index: 1;
-    background: rgba(65,65,70,0.7);
+    background: rgba(65,65,70,1);
     padding-top: 10px;
     min-height: 50px; 
 	width: 70%;
