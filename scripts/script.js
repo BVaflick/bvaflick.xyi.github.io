@@ -22,11 +22,12 @@
 start();
 
 async function start() {
-    let url = 'https://api.vk.com/method/photos.get?owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.0'
-    await fetch(url).then((res) => {
-        return res.json()
-    }).then((data) => {
-        console.log(data);
+    let test = 'https://api.vk.com/method/getProfiles?uid=66748&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126';
+    // let url = 'https://api.vk.com/method/photos.get?owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.0'
+    const resp = await fetch(test, {
+        mode: 'no-cors'
     })
+    json = await resp.json();
+    await console.log(json);
 }
 
