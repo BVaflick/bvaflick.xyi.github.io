@@ -84,10 +84,10 @@ header{
 }
 
 .pictures{
-	margin-left: 15%;
+	/*margin-left: 15%;*/
 	padding: 10px;
 	background-color: white;
-	width: 70%;
+	width: 100%;
 }
 
 @media screen and (max-width: 900px) {

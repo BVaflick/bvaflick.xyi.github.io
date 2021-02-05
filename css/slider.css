@@ -16,8 +16,8 @@ body {
 div#slider { 
 	overflow: hidden; 
 	max-height: 400px; 
-	width: 70%;
-	margin-left: 15%;
+	width: 100%;
+	/*margin-left: 15%;*/
 }
 
 @media screen and (max-width: 900px) {
