@@ -52,21 +52,27 @@ function processPhotos(result) {
         img.width = width
         img.height = height
         img.src = item_p.url
-        img.onclick = (event) => {
-            if (event.target === img) {
-                let index = full_sizes.indexOf(document.getElementById('gallery').src)
-                document.getElementById('gallery').src = full_sizes[Array.from(document.getElementById('pictures').children).indexOf(img) - 1]
-                modal.style.display = 'block'
-            }
-        }
-        full_sizes.push(item_max_size.url)
-        document.getElementById('pictures').append(img)
+        // img.onclick = (event) => {
+        //     if (event.target === img) {
+        //         let index = full_sizes.indexOf(document.getElementById('gallery').src)
+        //         document.getElementById('gallery').src = full_sizes[Array.from(document.getElementById('pictures').children).indexOf(img) - 1]
+        //         modal.style.display = 'block'
+        // }
+        //     }
+        let a = document.createElement('a')
+        a.href = item_max_size.url
+        a.append(img)
+        // full_sizes.push(item_max_size.url)
+
+        document.getElementById('pictures').append(a)
+        lightGallery(document.getElementById('pictures'));
     })
 }
 
 function start() {
     // let url = 'https://api.vk.com/method/photos.get?rev=1&photo_sizes=1&owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
-    let url = 'https://api.vk.com/method/photos.get?rev=1&count=1000&owner_id=4731467&album_id=214624130&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
+    // let url = 'https://api.vk.com/method/photos.get?rev=1&count=10&owner_id=4731467&album_id=214624130&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
+    let url = 'https://api.vk.com/method/photos.get?rev=1&count=10&owner_id=5959747&album_id=194537481&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
     let head = document.getElementsByTagName('head')[0]
     let script = document.createElement('script')
     script.src = url
