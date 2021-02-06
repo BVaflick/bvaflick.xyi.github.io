@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font: 11px/1.4 Helvetica, Arial, Sans-Serif;
+    background-size: cover;
+    height: 100%;
+}
+
+article, aside, figure, footer, header, hgroup,
+menu, nav, section {
+    display: block;
+}
+
+#page-wrap {
+    width: 960px;
+    margin: 80px auto;
+    position: relative;
+}
+
+#title {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    z-index: 3;
+}
+
+#menu {
+    width: 400px;
+    padding-left: 50px;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-left: 50px;
+}
+
+#menu:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    z-index: 2;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0, 0, 0, 100)), color-stop(1, rgba(0, 0, 0, 0)));
+}
+
+#menu:after {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    z-index: 2;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(0, 0, 0, 0)), color-stop(1, rgba(0, 0, 0, 100)));
+}
+
+#menu ul {
+    list-style: none;
+}
+
+#menu a {
+    text-decoration: none;
+    display: block;
+    color: #fafafa;
+}
+
+#mover {
+    position: absolute;
+    width: 100%;
+    padding-top: 40px;
+    height: 360px;
+}
+
+#mover div {
+    padding: 0 30px;
+}
+
+#menu .hover {
+    font-weight: bold;
+    font-size: 18px;
+    color: #e09494;
+    margin-left: -5px;
+}

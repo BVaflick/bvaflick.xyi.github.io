@@ -12,14 +12,68 @@ start()
 //         }
 //     }
 // }
-document.getElementById('pictures').addEventListener('onBeforeSlide', () => {
-    console.log('be me')
-})
+// document.getElementById('pictures').addEventListener('onBeforeSlide', () => {
+//     console.log('be me')
+// })
 
+let currentGallery
+
+function processPhotos2(result) {
+    let array = result.response.items.map(i => {
+        let item_max_size = i.sizes.find(s => s.type === 'w') || i.sizes.find(s => s.type === 'z') || i.sizes.find(s => s.type === 'y') || i.sizes.find(s => s.type === 'x')
+        return {src: item_max_size.url}
+    })
+    lightGallery(currentGallery, {
+        hideBarsDelay: 1500,
+        counter: true,
+        enableDrag: false,
+        dynamic: true,
+        dynamicEl: array
+
+    });
+}
+
+function processPreview(result) {
+    let i = result.response.items[0]
+    let item_max_size = i.sizes.find(s => s.type === 'w') || i.sizes.find(s => s.type === 'z') || i.sizes.find(s => s.type === 'y') || i.sizes.find(s => s.type === 'x')
+    document.querySelector('body').style.backgroundImage = 'url(' + item_max_size.url + ')';
+}
+
+function processAlbums(result) {
+    let items = result.response.items
+    let albums_list = document.createElement('ul');
+    items.forEach((item, i) => {
+        let el = document.createElement('li')
+        let a = document.createElement('a')
+        a.dataset.href = item.id
+        a.href = '#'
+        a.innerText = item.title
+        a.dataset.pos = i
+        let speed = 10
+        a.onmouseover = i => {
+            a.className = 'hover'
+            let url = 'https://api.vk.com/method/photos.get?rev=1&count=1&owner_id=-26953&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPreview'
+            document.getElementById('mover').style.top = -(a.dataset.pos * speed - 40) + 'px'
+            start(url)
+        }
+        a.onmouseout = i => {
+            a.classList.remove('hover')
+        }
+        // item.description
+        el.append(a)
+        albums_list.append(el)
+        a.onclick = () => {
+            let url = 'https://api.vk.com/method/photos.get?count=1000&owner_id=-26953&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos2'
+            start(url)
+            currentGallery = a
+        }
+    })
+    document.getElementById('mover').append(albums_list)
+}
 
 function processPhotos(result) {
-    let imageObserver = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
+    let imageObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
                 let image = entry.target;
                 image.src = image.dataset.src;
@@ -53,18 +107,19 @@ function processPhotos(result) {
 
     lightGallery(document.getElementById('pictures'), {
         hideBarsDelay: 1500,
-        counter: true,
-        enableDrag: true
+        counter: false,
+        enableDrag: false
     });
 }
 
-function start() {
+function start(custom_url) {
     // let url = 'https://api.vk.com/method/photos.get?rev=1&photo_sizes=1&owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
     // let url = 'https://api.vk.com/method/photos.get?rev=1&count=10&owner_id=4731467&album_id=214624130&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
-    let url = 'https://api.vk.com/method/photos.get?rev=1&count=1000&owner_id=5959747&album_id=194537481&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
+    // let url = 'https://api.vk.com/method/photos.get?rev=1&count=1000&owner_id=5959747&album_id=194537481&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
+    let url = 'https://api.vk.com/method/photos.getAlbums?owner_id=-26953&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processAlbums'
     let head = document.getElementsByTagName('head')[0]
     let script = document.createElement('script')
-    script.src = url
+    script.src = custom_url || url
     script.id = 'script'
     let current_script = document.getElementById('script')
     if (current_script) head.removeChild(current_script)
