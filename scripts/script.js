@@ -1,4 +1,4 @@
-start()
+
 // modal.onclick = function (event) {
 //     if (event.target === modal) {
 //         modal.style.display = "none"
@@ -15,8 +15,10 @@ start()
 // document.getElementById('pictures').addEventListener('onBeforeSlide', () => {
 //     console.log('be me')
 // })
-
+// let owner_id = -47160117 //ki-hi
+let owner_id = -26953
 let currentGallery
+start()
 
 function processPhotos2(result) {
     let array = result.response.items.map(i => {
@@ -28,8 +30,8 @@ function processPhotos2(result) {
         counter: true,
         enableDrag: false,
         dynamic: true,
-        dynamicEl: array
-
+        dynamicEl: array,
+        mousewheel: true
     });
 }
 
@@ -39,36 +41,42 @@ function processPreview(result) {
     document.querySelector('body').style.backgroundImage = 'url(' + item_max_size.url + ')';
 }
 
+let timeout
+let hoveredElement
 function processAlbums(result) {
     let items = result.response.items
     let albums_list = document.createElement('ul');
     items.forEach((item, i) => {
-        let el = document.createElement('li')
+        let li = document.createElement('li')
+        albums_list.append(li)
         let a = document.createElement('a')
         a.dataset.href = item.id
         a.href = '#'
-        a.innerText = item.title
+        a.innerText = item.title.toUpperCase()
         a.dataset.pos = i
         let speed = 10
         a.onmouseover = i => {
+            if(hoveredElement) hoveredElement.classList.remove('hover')
             a.className = 'hover'
-            let url = 'https://api.vk.com/method/photos.get?rev=1&count=1&owner_id=-26953&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPreview'
-            document.getElementById('mover').style.top = -(a.dataset.pos * speed - 40) + 'px'
-            start(url)
+            hoveredElement = a
+            clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                let url = 'https://api.vk.com/method/photos.get?rev=1&count=1&owner_id=' + owner_id + '&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPreview'
+                start(url)
+            }, 500)
         }
-        a.onmouseout = i => {
-            a.classList.remove('hover')
-        }
-        // item.description
-        el.append(a)
-        albums_list.append(el)
+        // a.onmouseout = i => {
+        //     a.classList.remove('hover')
+        // }
+        li.append(a)
+        albums_list.append(li)
         a.onclick = () => {
-            let url = 'https://api.vk.com/method/photos.get?count=1000&owner_id=-26953&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos2'
+            let url = 'https://api.vk.com/method/photos.get?count=1000&owner_id=' + owner_id + '&album_id=' + a.dataset.href + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos2'
             start(url)
             currentGallery = a
         }
     })
-    document.getElementById('mover').append(albums_list)
+    document.getElementById('list').append(albums_list)
 }
 
 function processPhotos(result) {
@@ -108,6 +116,7 @@ function processPhotos(result) {
     lightGallery(document.getElementById('pictures'), {
         hideBarsDelay: 1500,
         counter: false,
+        mousewheel: true,
         enableDrag: false
     });
 }
@@ -116,7 +125,7 @@ function start(custom_url) {
     // let url = 'https://api.vk.com/method/photos.get?rev=1&photo_sizes=1&owner_id=-5880263&album_id=204376129&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
     // let url = 'https://api.vk.com/method/photos.get?rev=1&count=10&owner_id=4731467&album_id=214624130&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
     // let url = 'https://api.vk.com/method/photos.get?rev=1&count=1000&owner_id=5959747&album_id=194537481&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processPhotos'
-    let url = 'https://api.vk.com/method/photos.getAlbums?owner_id=-26953&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processAlbums'
+    let url = 'https://api.vk.com/method/photos.getAlbums?owner_id=' + owner_id + '&access_token=171062ab171062ab171062ab98175ef93711710171062ab4b747c497a208287e3f065a3&v=5.126&callback=processAlbums'
     let head = document.getElementsByTagName('head')[0]
     let script = document.createElement('script')
     script.src = custom_url || url

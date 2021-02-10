@@ -1,8 +1,8 @@
 /**!
  * lightgallery.js | 1.4.1-beta.0 | October 29th 2020
  * http://sachinchoolur.github.io/lightgallery.js/
- * Copyright (c) 2016 Sachin N; 
- * @license GPLv3 
+ * Copyright (c) 2016 Sachin N;
+ * @license GPLv3
  */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Lightgallery = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (global, factory) {
     if (typeof define === "function" && define.amd) {
@@ -246,7 +246,7 @@
         startClass: 'lg-start-zoom',
         backdropDuration: 150,
 
-        // Set 0, if u don't want to hide the controls 
+        // Set 0, if u don't want to hide the controls
         hideBarsDelay: 6000,
 
         useLeft: false,
@@ -265,6 +265,7 @@
         slideEndAnimatoin: true,
         hideControlOnEnd: false,
         mousewheel: false,
+        mousewheelReverseDirection: false,
 
         getCaptionFromTitleOrAlt: true,
 
@@ -461,7 +462,7 @@
             }, 50);
 
             if (_this.s.mousewheel) {
-                _this.mousewheel();
+                _this.mousewheel(_this.s.mousewheelReverseDirection);
             }
         }
 
@@ -970,7 +971,7 @@
         ** ** avoid simultaneous image load
     <=> ** Preload() will check for s.preload value and call loadContent() again accoring to preload value
         ** loadContent()  <====> Preload();
-    
+
     *   @param {Number} index - index of the slide
     *   @param {Boolean} fromTouch - true if slide function called via touch event or mouse drag
     *   @param {Boolean} fromThumb - true if slide function called via thumbnail click
@@ -1282,7 +1283,7 @@
     };
 
     Plugin.prototype.touchMove = function (startCoords, endCoords) {
-
+        console.log('touched')
         var distance = endCoords - startCoords;
 
         if (Math.abs(distance) > 15) {
@@ -1349,6 +1350,7 @@
             for (var i = 0; i < _this.___slide.length; i++) {
                 /*jshint loopfunc: true */
                 _lgUtils2.default.on(_this.___slide[i], 'touchstart.lg', function (e) {
+                    console.log('touched')
                     if (!_lgUtils2.default.hasClass(_this.outer, 'lg-zoomed') && !_this.lgBusy) {
                         e.preventDefault();
                         _this.manageSwipeClass();
@@ -1473,7 +1475,7 @@
         _lgUtils2.default.addClass(this.___slide[touchNext], 'lg-next-slide');
     };
 
-    Plugin.prototype.mousewheel = function () {
+    Plugin.prototype.mousewheel = function (isReverse) {
         var _this = this;
         _lgUtils2.default.on(_this.outer, 'mousewheel.lg', function (e) {
 
@@ -1481,7 +1483,7 @@
                 return;
             }
 
-            if (e.deltaY > 0) {
+            if (e.deltaY > 0 && isReverse || e.deltaY < 0 && !isReverse) {
                 _this.goToPrevSlide();
             } else {
                 _this.goToNextSlide();
