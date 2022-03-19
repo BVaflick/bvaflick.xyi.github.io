@@ -16,7 +16,8 @@
 //     console.log('be me')
 // })
 // let owner_id = -47160117 //ki-hi
-let owner_id = -26953
+//let owner_id = -26953 // 
+let owner_id = -190934285
 let currentGallery
 start()
 
